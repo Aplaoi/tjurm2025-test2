@@ -1,11 +1,11 @@
-find_contours
+rect
 
 stop
 
 resize
 erode
+find_contours
 
-rect
 split
 threshold
 compute_iou

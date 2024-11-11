@@ -1,5 +1,7 @@
 #include "impls.h"
-
+#include <vector>
+using namespace std;
+using namespace cv;
 
 std::pair<cv::Rect, cv::RotatedRect> get_rect_by_contours(const cv::Mat& input) {
     /**
@@ -12,5 +14,20 @@ std::pair<cv::Rect, cv::RotatedRect> get_rect_by_contours(const cv::Mat& input) 
     */
     std::pair<cv::Rect, cv::RotatedRect> res;
     // IMPLEMENT YOUR CODE HERE
+    Mat gray, dst;
+    cvtColor(input, gray, COLOR_BGR2GRAY);
+    threshold(gray, dst, 50, 255, THRESH_BINARY);
+    vector<vector<Point>> contours;
+    findContours(dst, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    vector<Point> newContours;
+    for (vector<Point> vec:contours){
+        for (Point point:vec){
+            newContours.push_back(point);
+        }
+    }
+    Rect rect1 = boundingRect(newContours);
+    RotatedRect rect2 = minAreaRect(newContours);
+    res.first = rect1;
+    res.second = rect2;
     return res;
 }
