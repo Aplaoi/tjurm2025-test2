@@ -1,5 +1,5 @@
 #include "impls.h"
-
+using namespace cv;
 
 std::vector<cv::Mat> erode(const cv::Mat& src_erode, const cv::Mat& src_dilate) {
     /**
