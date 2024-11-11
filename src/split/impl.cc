@@ -1,4 +1,6 @@
 #include "impls.h"
+using namespace std;
+using namespace cv;
 
 std::vector<cv::Mat> split(const cv::Mat& rgb_image) {
     /**
@@ -15,9 +17,9 @@ std::vector<cv::Mat> split(const cv::Mat& rgb_image) {
      * GOAL:
      *  1. 此任务会自动判断你的代码是否正确，通过测试 (打印出 pass ) 即可
      */
-    std::vector<cv::Mat> result;
-
     // TODO: 实现代码
-
+    std::vector<cv::Mat> result;
+    split(rgb_image, result);
+    // swap(result[0], result[2]);
     return result;
 }
