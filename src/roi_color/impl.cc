@@ -1,6 +1,7 @@
 #include "impls.h"
 #include <unordered_map>
-
+using namespace cv;
+using namespace std;
 
 std::unordered_map<int, cv::Rect> roi_color(const cv::Mat& input) {
     /**
@@ -30,6 +31,37 @@ std::unordered_map<int, cv::Rect> roi_color(const cv::Mat& input) {
      */
     std::unordered_map<int, cv::Rect> res;
     // IMPLEMENT YOUR CODE HERE
-
+    Mat gray, binary;
+    vector<vector<Point>> contours;
+    cvtColor(input, gray, COLOR_BGR2GRAY);
+    threshold(gray, binary, 128, 255, THRESH_BINARY_INV);
+    findContours(binary, contours, RETR_TREE, CHAIN_APPROX_NONE);
+    for (vector<Point> vec:contours){
+        Rect rect=boundingRect(vec);
+        Mat roi = input(rect);
+        bool isMatch = false;
+        for (int y = 0; y < roi.rows; y++)
+        {
+            for (int x = 0; x < roi.cols;x++){
+                if (roi.at<Vec3b>(y, x)[0]==243)//蓝色
+                {
+                    res[0] = rect;
+                    isMatch = true;
+                    break;
+                }
+                if(roi.at<Vec3b>(y,x)[1]==177){//绿色
+                    res[1] = rect;
+                    isMatch = true;
+                    break;
+                }
+                if(roi.at<Vec3b>(y,x)[2]==237){//红色
+                    res[2] = rect;
+                    isMatch = true;
+                    break;
+                }
+            }
+            if (isMatch) break;
+        }
+    }
     return res;
 }
