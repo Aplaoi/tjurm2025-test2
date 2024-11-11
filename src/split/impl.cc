@@ -20,6 +20,5 @@ std::vector<cv::Mat> split(const cv::Mat& rgb_image) {
     // TODO: 实现代码
     std::vector<cv::Mat> result;
     split(rgb_image, result);
-    // swap(result[0], result[2]);
     return result;
 }
